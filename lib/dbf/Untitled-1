@@ -1,0 +1,15 @@
+gen_attack_mask(AttackFun) ->
+    lists:foldl(fun(SqIdx, Tuple) ->
+        erlang:setelement(SqIdx + 1, Tuple, binbo_bb:bb_not(AttackFun(SqIdx,  binbo_bb:empty_bb()), binbo_bb:edges_bb(SqIdx)))
+    end, binbo_board:board_tuple(0), binbo_board:index_list()).
+
+
+def gen_attack_mask(attack_function :: ) do
+  Enum.reduce(
+    BinboBoard.index_list(),
+    BinboBoard.board_tuple(0), 
+    &attack_mask_element_setter/2
+  )
+end
+
+defp attack_mask_element_setter(index, tuple)
